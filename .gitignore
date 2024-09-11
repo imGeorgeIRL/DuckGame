@@ -72,9 +72,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignore everything in Assets
-/Assets/*
+# /Assets/*
 
 # But keep scripts, scenes and prefabs
-!/Assets/**/*.cs
-!/Assets/**/*.unity
-!/Assets/**/*.prefab
+#!/Assets/**/*.cs
+#!/Assets/**/*.unity
+#!/Assets/**/*.prefab
