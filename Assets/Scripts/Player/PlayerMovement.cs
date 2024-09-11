@@ -18,6 +18,14 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
     private float defaultSpeed;
 
+    private float vSpeed = 0f; //current vertical velocity
+    private float gravity = -9.81f;
+    private float fallSpeedMultiplier = 2f;
+    private float groundCheckDistance = 0.4f;
+    public LayerMask groundMask;
+
+    private bool isGrounded;
+
     public CharacterController controller;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
+
+        if (isGrounded && vSpeed < 0)
+        {
+            vSpeed = -2f;
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal"); //A and D between -1 and 1
         float vertical = Input.GetAxisRaw("Vertical"); //W and S between -1 and 1
 
@@ -62,8 +77,15 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("Running", false);
                 moveSpeed = defaultSpeed;
             }
+        }
 
-
-        } 
+       if (!isGrounded)
+        {
+            vSpeed += gravity * fallSpeedMultiplier * Time.deltaTime; //increase fall speed
+        }
+       
+       //apply vertical movement aka fall...
+       Vector3 velocity = new Vector3(0, vSpeed, 0);
+       controller.Move(velocity * Time.deltaTime);
     }
 }

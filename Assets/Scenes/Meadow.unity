@@ -321,7 +321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537433420}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2430064, y: -0, z: -0, w: 0.9700247}
+  m_LocalRotation: {x: 0.24300638, y: 1e-45, z: -0, w: 0.9700247}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 721576459}
   - component: {fileID: 721576461}
   - component: {fileID: 721576460}
+  - component: {fileID: 721576463}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Player
@@ -356,7 +357,7 @@ Transform:
   m_GameObject: {fileID: 721576458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 408.95404, y: 0.103, z: 419.23477}
+  m_LocalPosition: {x: 408.95404, y: 17.9, z: 419.23477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -380,6 +381,9 @@ MonoBehaviour:
   moveSpeed: 5
   runSpeed: 8
   turnSmoothTime: 0.1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
   controller: {fileID: 721576461}
 --- !u!143 &721576461
 CharacterController:
@@ -407,6 +411,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!65 &721576463
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721576458}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &877305945
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,8 +518,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877305945}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2430064, y: 0, z: 0, w: 0.9700247}
-  m_LocalPosition: {x: 408.95404, y: 7.6730003, z: 406.23477}
+  m_LocalRotation: {x: 0.2430064, y: 0.000000028908993, z: -0.0000000072421558, w: 0.9700247}
+  m_LocalPosition: {x: 408.95404, y: 25.47, z: 406.23477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -672,7 +697,7 @@ GameObject:
   - component: {fileID: 1130507033}
   - component: {fileID: 1130507032}
   - component: {fileID: 1130507031}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1037,7 @@ Transform:
   m_GameObject: {fileID: 1500475577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 408.95404, y: 7.6730003, z: 406.23477}
+  m_LocalPosition: {x: 408.95404, y: 25.47, z: 406.23477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1122,7 +1147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769265651}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22536874, y: 0.0000000083818605, z: -0.0000000019388904, w: 0.97427356}
+  m_LocalRotation: {x: 0.22536872, y: 0.000000018742409, z: -0.0000000043354897, w: 0.97427356}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1749,7 +1774,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5143490970098758298}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
