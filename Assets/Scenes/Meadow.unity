@@ -384,6 +384,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  flightTime: 2
   controller: {fileID: 721576461}
 --- !u!143 &721576461
 CharacterController:
@@ -1320,7 +1321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896427347}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26061046, y: 1e-45, z: -0, w: 0.9654441}
+  m_LocalRotation: {x: 0.26061046, y: -3e-45, z: 1e-45, w: 0.9654441}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
