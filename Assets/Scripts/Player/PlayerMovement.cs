@@ -24,8 +24,10 @@ public class PlayerMovement : MonoBehaviour
     private float fallSpeedMultiplier = 2f;
     private float groundCheckDistance = 0.4f;
     public LayerMask groundMask;
+    public LayerMask waterMask;
 
     private bool isGrounded;
+    private bool isSwimming;
 
     [SerializeField] private float flightTime;
     [SerializeField] private float takeoffTime = 1.2f;
@@ -44,16 +46,19 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* if (!isFlying)
+
+
+        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
+        isSwimming = Physics.CheckSphere(transform.position, groundCheckDistance, waterMask);
+        
+        if (isSwimming)
         {
-            HandleMovement();
+            animator.SetBool("onWater", true);
         }
         else
         {
-            controller.Move(flightDirection * moveSpeed * Time.deltaTime);
-        } */
-
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
+            animator.SetBool("onWater", false);
+        }
 
         if (isGrounded && vSpeed < 0)
         {
@@ -106,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
             }
         } 
 
-        if (!isGrounded)
+        if (!isGrounded && !isSwimming)
         {
             vSpeed += gravity * fallSpeedMultiplier * Time.deltaTime; //increase fall speed
         }
@@ -118,67 +123,14 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void HandleMovement()
-    {
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
-
-        if (isGrounded && vSpeed < 0)
-        {
-            vSpeed = -2f;
-        }
-
-        float horizontal = Input.GetAxisRaw("Horizontal"); //A and D between -1 and 1
-        float vertical = Input.GetAxisRaw("Vertical"); //W and S between -1 and 1
-
-        if (isFlying)
-        {
-            horizontal = 1f;
-        }
-
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-
-        if (direction.magnitude > 0.1)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y; //finds target angle for player facing
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime); //smooths the transition between angles instead of staggered
-            transform.rotation = Quaternion.Euler(0f, angle, 0f); //applies the rotation
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * moveSpeed * Time.deltaTime); //moving the player
-
-            animator.SetInteger("AnimationPar", 1);
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StartCoroutine(Flying());
-            }
-        }
-        else
-        {
-            animator.SetInteger("AnimationPar", 0);
-        }
-
-        if (animator.GetInteger("AnimationPar") >= 0.1f)
-        {
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                animator.SetBool("Running", true);
-                moveSpeed = runSpeed;
-            }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                animator.SetBool("Running", false);
-                moveSpeed = defaultSpeed;
-            }
-        }
-    }
-
-
 
     private IEnumerator Flying()
     {
-        
+        if (isSwimming)
+        {
+            animator.SetBool("takeOffFromWater", true);
+        }
+
         isFlying = true;
         //flightDirection = transform.forward;
 
@@ -228,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
 
         //landing phase: gradually move down until ground is detected
         animator.SetTrigger("land");
-        while (!isGrounded)
+        while (!isGrounded && !isSwimming)
         {
             Vector3 descent = new Vector3(0, -landingTime * Time.deltaTime, 0);
             controller.Move(descent);
@@ -239,5 +191,6 @@ public class PlayerMovement : MonoBehaviour
 
         gravity = oldGravity;        
         isFlying = false;
+        animator.SetBool("takeOffFromWater", false);
     }
 }
