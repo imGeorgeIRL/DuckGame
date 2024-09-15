@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && vSpeed < 0)
         {
             vSpeed = -2f;
+            
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal"); //A and D between -1 and 1
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (isFlying)
         {
             vertical = 1f;
+            moveSpeed = runSpeed;
         }
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
@@ -126,9 +128,9 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Flying()
     {
-        float oldSpeed = moveSpeed;
+        //float oldSpeed = moveSpeed;
 
-        moveSpeed = runSpeed;
+        //moveSpeed = runSpeed;
         if (isSwimming)
         {
             animator.SetBool("takeOffFromWater", true);
@@ -193,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         gravity = oldGravity;
-        moveSpeed = oldSpeed;
+        //moveSpeed = oldSpeed;
         isFlying = false;
         animator.SetBool("takeOffFromWater", false);
     }

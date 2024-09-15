@@ -91,9 +91,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FlowSpeed: 0.1
-    - _FoamDensity: 50
+    - _FoamDensity: 1
     - _FoamSpeed: 1
-    - _FoamThickness: 7.43
+    - _FoamThickness: 6.33
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
