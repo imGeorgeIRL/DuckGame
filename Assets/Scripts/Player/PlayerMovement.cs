@@ -126,6 +126,9 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Flying()
     {
+        float oldSpeed = moveSpeed;
+
+        moveSpeed = runSpeed;
         if (isSwimming)
         {
             animator.SetBool("takeOffFromWater", true);
@@ -189,7 +192,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        gravity = oldGravity;        
+        gravity = oldGravity;
+        moveSpeed = oldSpeed;
         isFlying = false;
         animator.SetBool("takeOffFromWater", false);
     }
